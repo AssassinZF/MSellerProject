@@ -20,6 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation
 {
+    
+    NSLog(@"这是我的改动臭妞 你能看到吗");
     if ([WXApi handleOpenURL:url delegate:[MPayManger sharedMPayManger]]) {
         return YES;
     }else if ([url.host isEqualToString:@"safepay"]){
