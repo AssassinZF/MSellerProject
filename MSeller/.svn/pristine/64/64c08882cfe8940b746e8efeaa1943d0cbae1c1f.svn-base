@@ -1,0 +1,395 @@
+//
+//  MStoreManageViewPage.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreManageViewPage.h"
+
+
+#import "MStoreManageHeaderView.h"
+#import "MStoreManageSectionView.h"
+#import "MStoreManageModel.h"
+#import "MStoreManageTableViewCell.h"
+#import "MShareAlertView.h"
+#import "UIScrollView+ScalableCover.h"
+#import "MStoreInfoData.h"
+#import "MStoreManageModel.h"
+#import "MDragCellTableView.h"
+
+
+@interface MStoreManageViewPage ()
+<MBaseControllerDelegate,UITableViewDelegate,
+UITableViewDataSource, MStoreManageSectionViewDeleage,
+MStoreManageHeaderViewDelegate,MStoreManageTableViewCellDelegate,
+MDragCellTableViewDelegate, MDragCellTableViewDataSource>
+{
+    MStoreManageModel *manageModel;         //店铺管理model
+    MStoreManageHeaderView *headerView;     //店铺管理headerview
+    MStoreManageSectionView *sectionView;   //精选列表sectionview
+    MStoreInfoData *infoData;               //店铺信息data
+}
+
+
+@property (nonatomic, strong) MDragCellTableView *storeManageTable;
+@property (nonatomic) CGFloat halfHeight;
+
+@end
+
+@implementation MStoreManageViewPage
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self registController:@"MStoreManageController"];
+        manageModel = [self.controller getModelFromListByName:@"MStoreManageModel"];
+    }
+    return self;
+}
+
+
+- (void)initWithParam:(NSDictionary *)paramInfo
+{
+    infoData = paramInfo[@"infoData"];
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.title = @"店铺管理";
+    
+    [self.view addSubview:self.storeManageTable];//添加tableview
+    
+    self.controller.delegate = self;
+    
+    self.navigationController.navigationBarHidden = YES;
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    [self initManageTableProperty];
+    
+    [self.controller sendMessageID:mRequestChoicenessListTag messageInfo:@{@"type":[NSNumber numberWithInteger:1]}];
+    manageModel.choicenessListArray = [NSMutableArray array];
+    [manageModel.choicenessListArray addObject:@"1"];
+    [manageModel.choicenessListArray addObject:@"1"];
+    [manageModel.choicenessListArray addObject:@"1"];
+    [manageModel.choicenessListArray addObject:@"1"];
+    
+    manageModel.attentionListArray = [NSMutableArray array];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+    [manageModel.attentionListArray addObject:@"1"];
+}
+
+
+#pragma mark 初始化表的相关属性
+- (void)initManageTableProperty
+{
+    headerView = [MStoreManageHeaderView initSectionViewWithNib:self];
+    [headerView setIsStoreHome:NO];
+    headerView.delegate = self;
+    self.storeManageTable.tableHeaderView = headerView;
+    [self.storeManageTable addScalableCoverWithColor:MC_Orange_Color heightWith:headerView.height];
+    [headerView updateStoreHeaderData:infoData isHead:NO];
+    
+    [self.storeManageTable registerNib:[UINib nibWithNibName:NSStringFromClass([MStoreManageTableViewCell class]) bundle:nil] forCellReuseIdentifier:[MStoreManageTableViewCell getCellIdentifier]];
+    [self.storeManageTable reloadData];
+    
+    sectionView = [MStoreManageSectionView initSectionViewWithNib:self];
+    sectionView.delegate = self;
+    manageModel.isChoiceness = YES;
+    manageModel.isSort = NO;
+}
+
+
+#pragma mark MStoreManageHeaderViewDelegate
+- (void)clickManageHeaderBtnActionWithType:(MStoreManageHeaderActionType)type
+{
+    switch (type)
+    {
+        case MStoreManageHeaderActionTypeLeftBack:       //左侧返回事件
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeRightPreview:   //右侧预览事件
+        {
+            
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeEditAvatar:     //编辑头像事件
+        {
+            [self pushPageWithName:@"MStoreInfoViewPage" animation:YES withParams:@{@"infoData":infoData}];
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeStoreShare:     //店铺分享事件
+        {
+            [MShareAlertView showShareAlertViewWith:MAppDelegateObj.window delegate:self data:nil];
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
+}
+
+
+#pragma mark MStoreManageSectionViewDeleage
+- (void)changeSelectBtnActionWithType:(StoreManageClickType)type
+{
+    if (type == StoreManageClickTypeChoiceness)
+    {
+        manageModel.isChoiceness = YES;
+        [self.controller sendMessageID:mRequestChoicenessListTag messageInfo:@{@"type":[NSNumber numberWithInteger:1]}];
+    }
+    else if (type == StoreManageClickTypeAttention)
+    {
+        manageModel.isChoiceness = NO;
+        [self.controller sendMessageID:mRequestAttentionListTag messageInfo:@{@"type":[NSNumber numberWithInteger:0]}];
+    }
+    else if (type == StoreManageClickTypeSort)
+    {
+        if (sectionView.storeSortBtn.selected)
+        {
+            manageModel.isSort = YES;
+        }
+        else
+            manageModel.isSort = NO;
+        
+//        [self.storeManageTable setEditing:manageModel.isSort animated:YES];
+        self.storeManageTable.allowDrage = manageModel.isSort;//点击排序 才能允许拖动
+    }
+    [self.storeManageTable reloadData];
+}
+
+
+#pragma mark MStoreManageTableViewCellDelegate
+- (void)clickStoreManageActionWithType:(MStoreManageActionType)type
+{
+    switch (type)
+    {
+        case MStoreManageActionTypeCCancel:     //精选列表取消按钮
+        {
+            [self.controller sendMessageID:mRequestEditShopInfoTag messageInfo:@{@"actionType":[NSNumber numberWithInteger:MStoreManageRequestTypeCancelRecommend]}];
+        }
+            break;
+        case MStoreManageActionTypeCShare:      //精选列表分享按钮
+        {
+            [MShareAlertView showShareAlertViewWith:MAppDelegateObj.window delegate:self data:nil];
+        }
+            break;
+        case MStoreManageActionTypeADelete:     //关注列表删除按钮
+        {
+            [self.controller sendMessageID:mRequestEditShopInfoTag messageInfo:@{@"actionType":[NSNumber numberWithInteger:MStoreManageRequestTypeCancelAttention]}];
+        }
+            break;
+        case MStoreManageActionTypeAAdd:        //关注列表添加按钮
+        {
+            [self.controller sendMessageID:mRequestEditShopInfoTag messageInfo:@{@"actionType":[NSNumber numberWithInteger:MStoreManageRequestTypeAddRecommend]}];
+        }
+            break;
+        case MStoreManageActionTypeAShare:      //关注列表分享按钮
+        {
+            [MShareAlertView showShareAlertViewWith:MAppDelegateObj.window delegate:self data:nil];
+        }
+            break;
+        case MStoreManageActionTypeSort:        //排序条件排序按钮
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+#pragma mark -
+#pragma mark - UITableViewDelegate、UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (manageModel.isChoiceness)
+    {
+        return [manageModel.choicenessListArray count];
+    }
+    else
+        return [manageModel.attentionListArray count];
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return mLayout_Ratio(141);
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MStoreManageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MStoreManageTableViewCell getCellIdentifier]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.delegate = self;
+    [cell updateManageCellWithModel:manageModel];
+    
+    return cell;
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    StoreManageClickType type = manageModel.isChoiceness?StoreManageClickTypeChoiceness:StoreManageClickTypeAttention;
+    [sectionView setActionBtnLineWithBtnType:type];
+    [sectionView updateSectionSubviewsWithData:manageModel];
+    return sectionView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (manageModel.isChoiceness)
+    {
+        return mLayout_Ratio(78);
+    }
+    else
+    {
+        return mLayout_Ratio(48);
+    }
+    return 0;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //关注列表下不可移动
+    if (manageModel.isChoiceness)
+    {
+        return YES;
+    }
+    else
+        return NO;
+    return NO;
+}
+
+
+/*
+//确认编辑类型
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleNone;
+}
+
+//移动方法
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    // 移动cell之后更换数据数组里的循序
+    [manageModel.choicenessListArray exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+}
+*/
+
+
+#pragma mark -
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    UIPanGestureRecognizer *pan = scrollView.panGestureRecognizer;
+    CGFloat velocity = [pan velocityInView:scrollView].y;
+    
+    if (velocity < -5)
+    {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+    else if (velocity > 5)
+    {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
+    else if(velocity == 0)
+    {
+    }
+}
+
+
+#pragma mark MBaseControllerDelegate
+- (void)update:(id)data msgID:(int)msgid faildCode:(EDataStatusCode)errCode
+{
+    if (errCode == eDataCodeSuccess)
+    {
+        [self.storeManageTable reloadData];
+    }
+    else
+    {
+        [self.storeManageTable reloadData];
+    }
+}
+
+
+#pragma mark - 实现拖拽cell
+- (MDragCellTableView *)storeManageTable{
+    if (!_storeManageTable) {
+        _storeManageTable = [[MDragCellTableView alloc] init];
+        _storeManageTable.frame = CGRectMake(0, 0, Screen_Width, Screen_Height);
+        _storeManageTable.dataSource = self;
+        _storeManageTable.delegate = self;
+    }
+    return _storeManageTable;
+}
+
+#pragma mark - RTDragCellTableViewDelegate,RTDragCellTableViewDataSource
+- (NSArray *)originalArrayDataForTableView:(MDragCellTableView *)tableView
+{
+    return manageModel.choicenessListArray;
+}
+
+- (void)tableView:(MDragCellTableView *)tableView newArrayDataForDataSource:(NSArray *)newArray
+{
+    manageModel.choicenessListArray = [newArray mutableCopy];
+}
+
+
+
+- (void)getStoreInfo:(NSNotification *)notify
+{
+    infoData = [notify.userInfo objectForKey:MNC_EditStore_Info];
+    [headerView updateStoreHeaderData:infoData isHead:NO];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getStoreInfo:)
+                                                 name:MNC_EditStore_Info
+                                               object:nil];
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+
+@end

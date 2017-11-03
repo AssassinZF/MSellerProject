@@ -1,0 +1,238 @@
+//
+//  MStoreManageViewPage.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreManageViewPage.h"
+
+
+#import "MStoreManageHeaderView.h"
+#import "MStoreManageSectionView.h"
+#import "MStoreManageModel.h"
+#import "MStoreManageTableViewCell.h"
+#import "MShareAlertView.h"
+#import "UIScrollView+ScalableCover.h"
+#import "MStoreInfoData.h"
+
+
+@interface MStoreManageViewPage ()
+<MBaseControllerDelegate,UITableViewDelegate,
+UITableViewDataSource, MStoreManageSectionViewDeleage,
+MStoreManageHeaderViewDelegate>
+{
+    MStoreManageModel *manageModel;
+    MStoreManageHeaderView *headerView;
+    MStoreManageSectionView *sectionView;
+    MStoreInfoData *infoData;
+}
+
+@end
+
+@implementation MStoreManageViewPage
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self registController:@"MStoreManageController"];
+        manageModel = [self.controller getModelFromListByName:@"MStoreManageModel"];
+    }
+    return self;
+}
+
+
+- (void)initWithParam:(NSDictionary *)paramInfo
+{
+    infoData = paramInfo[@"infoData"];
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.title = @"店铺管理";
+    
+    self.controller.delegate = self;
+    
+    self.navigationController.navigationBarHidden = YES;
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    headerView = [MStoreManageHeaderView initSectionViewWithNib:self];
+    [headerView setIsStoreHome:NO];
+    headerView.delegate = self;
+    self.storeManageTable.tableHeaderView = headerView;
+    [self.storeManageTable addScalableCoverWithColor:MC_Orange_Color heightWith:headerView.height];
+    [headerView updateStoreHeaderData:infoData isHead:NO];
+    
+    [self.storeManageTable registerNib:[UINib nibWithNibName:NSStringFromClass([MStoreManageTableViewCell class]) bundle:nil] forCellReuseIdentifier:[MStoreManageTableViewCell getCellIdentifier]];
+    [self.storeManageTable reloadData];
+    
+    sectionView = [MStoreManageSectionView initSectionViewWithNib:self];
+    sectionView.delegate = self;
+    manageModel.isChoiceness = YES;
+    manageModel.isSort = NO;
+    
+    [self.controller sendMessageID:mRequestManageListTag messageInfo:@{@"type":[NSNumber numberWithInteger:1]}];
+}
+
+
+#pragma mark MStoreManageHeaderViewDelegate
+- (void)clickManageHeaderBtnActionWithType:(MStoreManageHeaderActionType)type
+{
+    switch (type)
+    {
+        case MStoreManageHeaderActionTypeLeftBack:       //左侧返回事件
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeRightPreview:   //右侧预览事件
+        {
+            
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeEditAvatar:     //编辑头像事件
+        {
+            [self pushPageWithName:@"MStoreInfoViewPage" animation:YES];
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeStoreShare:     //店铺分享事件
+        {
+            [MShareAlertView showShareAlertViewWith:MAppDelegateObj.window delegate:self data:nil];
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
+}
+
+
+#pragma mark MStoreManageSectionViewDeleage
+- (void)changeSelectBtnActionWithType:(StoreManageClickType)type
+{
+    if (type == StoreManageClickTypeChoiceness)
+    {
+        manageModel.isChoiceness = YES;
+        [self.controller sendMessageID:mRequestManageListTag messageInfo:@{@"type":[NSNumber numberWithInteger:1]}];
+    }
+    else if (type == StoreManageClickTypeAttention)
+    {
+        manageModel.isChoiceness = NO;
+        [self.controller sendMessageID:mRequestManageListTag messageInfo:@{@"type":[NSNumber numberWithInteger:0]}];
+    }
+    else if (type == StoreManageClickTypeSort)
+    {
+        if (sectionView.storeSortBtn.selected)
+        {
+            manageModel.isSort = YES;
+        }
+        else
+            manageModel.isSort = NO;
+    }
+    [self.storeManageTable reloadData];
+}
+
+
+#pragma mark -
+#pragma mark - UITableViewDelegate、UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+//    return [manageModel.manageListArray count];
+    return 5;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return mLayout_Ratio(141);
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MStoreManageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MStoreManageTableViewCell getCellIdentifier]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell updateManageCellWithModel:manageModel];
+    return cell;
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    StoreManageClickType type = manageModel.isChoiceness?StoreManageClickTypeChoiceness:StoreManageClickTypeAttention;
+    [sectionView setActionBtnLineWithBtnType:type];
+    [sectionView updateSectionSubviewsWithData:manageModel];
+    return sectionView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (manageModel.isChoiceness)
+    {
+        return mLayout_Ratio(78);
+    }
+    else
+    {
+        return mLayout_Ratio(48);
+    }
+    return 0;
+}
+
+
+#pragma mark -
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    UIPanGestureRecognizer *pan = scrollView.panGestureRecognizer;
+    CGFloat velocity = [pan velocityInView:scrollView].y;
+    
+    if (velocity < -5)
+    {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+    else if (velocity > 5)
+    {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
+    else if(velocity == 0)
+    {
+    }
+}
+
+
+#pragma mark MBaseControllerDelegate
+- (void)update:(id)data msgID:(int)msgid faildCode:(EDataStatusCode)errCode
+{
+    if (errCode == eDataCodeSuccess)
+    {
+        [self.storeManageTable reloadData];
+    }
+    else
+    {
+        [self.storeManageTable reloadData];
+    }
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+
+@end

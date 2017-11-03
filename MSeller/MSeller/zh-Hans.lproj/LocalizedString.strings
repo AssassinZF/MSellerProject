@@ -1,0 +1,113 @@
+/* 
+  LocalizedString.strings
+  MSeller
+
+  Created by TreeWrite on 2017/10/17.
+  Copyright © 2017年 TreeWrite. All rights reserved.
+*/
+
+/*
+ *提示语
+ */
+"mPublic_Sever_Error" = "服务器异常请稍后再试~";
+
+/*
+ *提示语
+ */
+"mAlert_Title" = "温馨提示";
+"mAlert_Confirm" = "确定";
+"mAlert_Cancel" = "取消";
+"mAlert_Share_Title" = "好友使用你的链接购买商品,你可获得%@元";
+"mAlert_Share_WeiBo_Message" = "尚未配置微博账户。\n您可在“设置”中添加或创建微博账户。";
+"mAlert_Share_QQ_Message" = "你还没有安装QQ哟~";
+"mAlert_Share_WeiXin_Message" = "你还没有安装微信哟~";
+"mAlert_Request_Error" = "您的网络不给力哟~";
+"mAlert_Goods_Like_Success" = "关注成功";
+"mAlert_Goods_Like_cancel" = "取消关注成功";
+"mAlert_Goods_Recomm_cancel" = "取消推荐成功";
+"mAlert_Goods_Recomm_Success" = "推荐成功";
+"mAlert_Request_Refres" = "点击刷新";
+"mAlert_Personal_CleanCache" = "缓存已清除";
+
+
+/*
+ *引导页
+ */
+"mGuide_Page_Next" = "进入";
+"mGuide_Page_Open" = "开店";
+
+/*
+ *注册登录
+ */
+"mLogin_Check_Protocol" = "登录即视为遵守《用户使用协议》";
+"mLogin_Text_Protocol" = "《用户使用协议》";
+"mLogin_Toast_Empt_Phone" = "请输入手机号";
+"mLogin_Toast_Wrong_Phone" = "请输入正确的手机号";
+"mLogin_Toast_Empt_AuthCode" = "请输入验证码";
+"mLogin_Alert_Request_Busy" = "您的获取验证码请求过于频繁，请15分钟之后重试";
+"mLogin_Toast_sending" = "正在发送";
+"mLogin_Button_Resend" = "重新发送";
+"mLogin_Button_GetCode" = "获取验证码";
+"mLogin_Toast_Login_Fail" = "登录失败";
+"mLogin_Button_Title" = "登录";
+"mLogin_Button_Disable_Title" = "登录中…";
+"mLogin_Toast_Send_Fail" = "发送失败";
+
+
+
+/*
+ *推荐列表(首页)
+ */
+"mHome_Nav_Title" = "满金店";
+
+
+/*
+ *个人中心
+ */
+"mPersonal_Balance" = "可用收益";
+"mPersonal_Estimate" = "预计收益(元)";
+"mPersonal_Cumulative" = "累计收益(元)";
+"mPersonal_Reflect" = "提现";
+"mPersonal_BankCar" = "银行卡";
+"mPersonal_Numbr" = "客服";
+"mPersonal_Set" = "设置";
+"mPersonal_Set_Cache_Content" = "确认清除本地缓存?";
+"mPersonal_Set_UserInfo" = "个人资料";
+"mPersonal_Set_Security" = "账号与安全";
+"mPersonal_Set_CleanCache" = "清理缓存";
+"mPersonal_Set_Help" = "帮助与反馈";
+"mPersonal_Set_About" = "关于满金店";
+
+
+
+
+/*
+ *商品详情
+ */
+"mGoods_Detaile_Nav_LeftTitle" = "详情";
+"mGoods_Detaile_Nav_RightTitle" = "图文分享";
+"mGoods_Detaile_Price" = "￥%.2f/约赚￥%.2f";
+"mGoods_Detaile_Tab_Detail" = "商品详情";
+"mGoods_Detaile_Select_Parameter" = "选择规格";
+"mGoods_Detaile_Tab_Parameter" = "规格参数";
+"mGoods_Detaile_Tab_Explain" = "购买须知";
+"mGoods_Home_CateList_Null" = "亲,暂无数据哦~";
+
+
+/*
+ *发现
+ */
+
+
+
+/*
+ *店铺
+ */
+
+
+
+
+/*
+ *搜索
+ */
+

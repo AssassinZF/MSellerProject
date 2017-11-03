@@ -1,0 +1,280 @@
+//
+//  MStoreHeadViewPage.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/30.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreHeadViewPage.h"
+
+#import "MStoreHeadModel.h"
+#import "MStoreManageHeaderView.h"
+#import "MStoreInfoTableViewCell.h"
+#import "MStoreSellTableViewCell.h"
+#import "MStoreOrderTableViewCell.h"
+#import "MShareAlertView.h"
+#import "UIScrollView+ScalableCover.h"
+
+
+@interface MStoreHeadViewPage ()
+<MBaseControllerDelegate, MStoreManageHeaderViewDelegate,
+MyStoreOrderTableViewCellDelegate, MStoreSellTableViewCellDelegate>
+{
+    MStoreHeadModel *_headModel;
+    MStoreManageHeaderView *headerView;
+    MStoreInfoModel *infoModel;
+    MStoreInfoData *infoData;
+}
+
+@end
+
+@implementation MStoreHeadViewPage
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self registController:@"MStoreHeadController"];
+        _headModel = [self.controller getModelFromListByName:@"MStoreHeadModel"];
+        infoData = [[MStoreInfoData alloc] init];
+    }
+    return self;
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    
+    self.controller.delegate = self;
+    
+    self.navigationController.navigationBarHidden = YES;
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    headerView = [MStoreManageHeaderView initSectionViewWithNib:self];
+    [headerView setIsStoreHome:YES];
+    headerView.delegate = self;
+    self.storeTable.tableHeaderView = headerView;
+    self.storeTable.tableFooterView = [UIView new];
+    [self.storeTable addScalableCoverWithColor:MC_Orange_Color heightWith:headerView.height];
+    
+    [self.storeTable registerNib:[UINib nibWithNibName:NSStringFromClass([MStoreInfoTableViewCell class]) bundle:nil] forCellReuseIdentifier:[MStoreInfoTableViewCell getCellIdentifier]];
+    [self.storeTable registerNib:[UINib nibWithNibName:NSStringFromClass([MStoreSellTableViewCell class]) bundle:nil] forCellReuseIdentifier:[MStoreSellTableViewCell getCellIdentifier]];
+    [self.storeTable registerNib:[UINib nibWithNibName:NSStringFromClass([MStoreOrderTableViewCell class]) bundle:nil] forCellReuseIdentifier:[MStoreOrderTableViewCell getCellIdentifier]];
+    
+    [self.storeTable reloadData];
+    
+    infoModel = [[MStoreInfoModel alloc] init];
+    infoModel.type = MStoreInfoCellTypeMyOrder;
+    infoModel.leftTextStr = @"我的订单";
+    infoModel.rightTextStr = @"全部";
+}
+
+
+#pragma mark MStoreManageHeaderViewDelegate
+- (void)clickManageHeaderBtnActionWithType:(MStoreManageHeaderActionType)type
+{
+    switch (type)
+    {
+        case MStoreManageHeaderActionTypeLeftBack:       //左侧消息事件
+        {
+            [self pushPageWithName:@"MMessageViewPage" animation:YES];
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeRightPreview:   //右侧预览事件
+        {
+            
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeEditAvatar:     //编辑头像事件
+        {
+            [self pushPageWithName:@"MStoreInfoViewPage" animation:YES withParams:@{@"infoData":infoData}];
+        }
+            break;
+            
+        case MStoreManageHeaderActionTypeStoreShare:     //店铺分享事件
+        {
+            [MShareAlertView showShareAlertViewWith:MAppDelegateObj.window delegate:self data:nil];
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
+}
+
+
+#pragma mark MStoreSellTableViewCellDelegate
+- (void)clickSellBtnActionWithType:(MStoreSellActionType)type
+{
+    switch (type)
+    {
+        case MStoreSellActionTypeOrder:                 //今日订单
+        {
+            
+        }
+            break;
+        case MStoreSellActionTypeSell:                 //本月销售
+        {
+            
+        }
+            break;
+        case MStoreSellActionTypeVisit:                //累计访问
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+#pragma mark MyStoreOrderTableViewCellDelegate
+- (void)clickStoreOrderActionWithType:(MStoreOrderActionType)type
+{
+    switch (type)
+    {
+        case MStoreOrderActionTypeObligation:            //待付款
+        {
+            
+        }
+            break;
+        case MStoreOrderActionTypeWaitReceive:           //待收货
+        {
+            
+        }
+            break;
+        case MStoreOrderActionTypeCompleted:             //已完成
+        {
+            
+        }
+            break;
+        case MStoreOrderActionTypeAfterSale:             //售后
+        {
+            
+        }
+            break;
+        case MStoreOrderActionTypeManageStore:           //管理我的店铺
+        {
+            [self pushPageWithName:@"MStoreManageViewPage" animation:YES withParams:@{@"infoData":infoData}];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+#pragma mark -
+#pragma mark - UITableViewDelegate、UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+    {
+        return [MStoreSellTableViewCell getCellHeihgt];
+    }
+    else if (indexPath.row == 1)
+    {
+        return mLayout_Ratio(50);
+    }
+    else if (indexPath.row == 2)
+    {
+        return [MStoreOrderTableViewCell getCellHeihgt];
+    }
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+    {
+        MStoreSellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MStoreSellTableViewCell getCellIdentifier]];
+        cell.delegate = self;
+        [cell updateStoreSellData:infoData];
+        
+        return cell;
+    }
+    else if (indexPath.row == 1)
+    {
+        MStoreInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MStoreInfoTableViewCell getCellIdentifier]];
+        [cell updateSubviewsPropertyWithModel:infoModel];
+        
+        return cell;
+    }
+    else if (indexPath.row == 2)
+    {
+        MStoreOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MStoreOrderTableViewCell getCellIdentifier]];
+        cell.delegate = self;
+        
+        return cell;
+    }
+    return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    //我的全部订单
+    if (indexPath.row == 1)
+    {
+
+    }
+}
+
+
+#pragma mark MBaseControllerDelegate
+- (void)update:(id)data msgID:(int)msgid faildCode:(EDataStatusCode)errCode
+{
+    if (errCode == eDataCodeSuccess)
+    {
+        infoData = [MStoreInfoData yy_modelWithJSON:data];
+        infoData.descriptionStr = data[@"description"];
+        [headerView updateStoreHeaderData:infoData isHead:YES];
+        [self.storeTable reloadData];
+    }
+    else
+    {
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            [self.view m_makeToast:data[@"message"]];
+        }
+    }
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    [self.controller sendMessageID:mRequestGetShopInfoTag messageInfo:nil];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+
+@end

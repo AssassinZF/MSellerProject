@@ -1,0 +1,116 @@
+//
+//  MStoreNameViewPage.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreNameViewPage.h"
+
+#import "MStoreInfoModel.h"
+#import "MStoreInfoViewPage.h"
+
+@interface MStoreNameViewPage ()
+<MBaseControllerDelegate>
+{
+    UIButton *_rightNavBtn;
+    MStoreInfoModel *infoModel;
+    NSString *storeNameStr;
+}
+
+@end
+
+@implementation MStoreNameViewPage
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self registController:@"MStoreInfoController"];
+        infoModel = [self.controller getModelFromListByName:@"MStoreInfoModel"];
+    }
+    return self;
+}
+
+
+- (void)initWithParam:(NSDictionary *)paramInfo
+{
+    storeNameStr = STR_IS_NULL(paramInfo[@"storename"]);
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.title = @"店名";
+    
+    [self setNavRightItemBtn];
+    
+    self.controller.delegate = self;
+    
+    if ([storeNameStr length] > 0 && storeNameStr)
+    {
+        self.inputStoreNameTF.text = storeNameStr;
+    }
+    self.inputStoreNameTF.font = [MUtilities setFontSizeWith:15.0];
+    self.storeNameTipLB.font = [MUtilities setFontSizeWith:14.0];
+}
+
+
+- (void)setNavRightItemBtn
+{
+    _rightNavBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_rightNavBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [_rightNavBtn setTitle:@"完成" forState:UIControlStateSelected];
+    [_rightNavBtn setTitleColor:MC_DarkGray_Color forState:UIControlStateDisabled];
+    [_rightNavBtn setTitleColor:MC_DarkGray_Color forState:UIControlStateHighlighted];
+    [_rightNavBtn setTitleColor:MC_DarkGray_Color forState:UIControlStateNormal];
+    _rightNavBtn.titleLabel.font = [MUtilities setFontSizeWith:15];
+    _rightNavBtn.frame = CGRectMake(0, 0, 44, 44);
+    [_rightNavBtn addTarget:self action:@selector(saveUserInfoToServer) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    negativeSpacer.width = -10;
+    self.navigationItem.rightBarButtonItems = @[negativeSpacer, [[UIBarButtonItem alloc]initWithCustomView:_rightNavBtn]];
+}
+
+
+- (void)saveUserInfoToServer
+{
+    [self.controller sendMessageID:mRequestEditShopInfoTag messageInfo:@{@"modType":[NSNumber numberWithInteger:1],@"content":self.inputStoreNameTF.text}];
+}
+
+
+-(void)backViewWithParam:(NSDictionary *)paramInfo
+{
+    infoModel.infoData.storename = self.inputStoreNameTF.text;
+    MStoreInfoViewPage *VC = [[MStoreInfoViewPage alloc] init];
+    [self popViewPageAnimated:VC withAnimated:YES withParams:@{@"infoData":infoModel.infoData}];
+}
+
+
+#pragma mark MBaseControllerDelegate
+- (void)update:(id)data msgID:(int)msgid faildCode:(EDataStatusCode)errCode
+{
+    if (errCode == eDataCodeSuccess)
+    {
+        [self popViewPageAnimated:YES];
+    }
+    else
+    {
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            [self.view m_makeToast:data[@"message"]];
+        }
+    }
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+
+@end

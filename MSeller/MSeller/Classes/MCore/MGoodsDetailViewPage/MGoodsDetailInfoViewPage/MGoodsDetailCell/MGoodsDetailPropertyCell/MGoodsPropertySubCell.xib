@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MGoodsPropertySubCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dv5-AU-fMe">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Dv5-AU-fMe" secondAttribute="height" multiplier="20:7" id="hKg-UK-ATX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZN-tg-yjA">
+                        <rect key="frame" x="115" y="0.0" width="205" height="35"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="par-GR-1hg">
+                        <rect key="frame" x="100" y="0.0" width="1" height="35"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="9sd-Vd-Hlo"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4t6-in-92r">
+                        <rect key="frame" x="0.0" y="34" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="pVo-Qr-rNd"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="50L-Ub-B2B">
+                        <rect key="frame" x="0.0" y="0.0" width="1" height="34"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="fVt-f5-HRz"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPk-u2-fKL">
+                        <rect key="frame" x="319" y="0.0" width="1" height="34"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="Ux9-aQ-1Sw"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="4t6-in-92r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0mL-Mk-hOC"/>
+                    <constraint firstItem="par-GR-1hg" firstAttribute="leading" secondItem="Dv5-AU-fMe" secondAttribute="trailing" id="2de-A1-N2Y"/>
+                    <constraint firstItem="50L-Ub-B2B" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4QH-qs-rjE"/>
+                    <constraint firstAttribute="bottom" secondItem="2ZN-tg-yjA" secondAttribute="bottom" id="5Tm-DP-jZF"/>
+                    <constraint firstItem="par-GR-1hg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="660-Mp-KET"/>
+                    <constraint firstAttribute="trailing" secondItem="HPk-u2-fKL" secondAttribute="trailing" id="7qY-Vm-r3m"/>
+                    <constraint firstItem="Dv5-AU-fMe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7ty-Bv-ij9"/>
+                    <constraint firstItem="50L-Ub-B2B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Lfn-gX-ncV"/>
+                    <constraint firstAttribute="trailing" secondItem="2ZN-tg-yjA" secondAttribute="trailing" id="O6a-Hx-UvC"/>
+                    <constraint firstAttribute="bottom" secondItem="4t6-in-92r" secondAttribute="bottom" id="PQt-T0-ZHv"/>
+                    <constraint firstAttribute="trailing" secondItem="4t6-in-92r" secondAttribute="trailing" id="TCN-g9-ONz"/>
+                    <constraint firstItem="4t6-in-92r" firstAttribute="top" secondItem="HPk-u2-fKL" secondAttribute="bottom" id="USy-uu-g0F"/>
+                    <constraint firstItem="2ZN-tg-yjA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="VYK-OY-AOd"/>
+                    <constraint firstAttribute="bottom" secondItem="par-GR-1hg" secondAttribute="bottom" id="Wyt-J3-nGK"/>
+                    <constraint firstItem="Dv5-AU-fMe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="cci-cn-DpH"/>
+                    <constraint firstItem="4t6-in-92r" firstAttribute="top" secondItem="50L-Ub-B2B" secondAttribute="bottom" id="gve-pR-CXA"/>
+                    <constraint firstItem="2ZN-tg-yjA" firstAttribute="leading" secondItem="Dv5-AU-fMe" secondAttribute="trailing" constant="15" id="hOG-66-ZTE"/>
+                    <constraint firstItem="HPk-u2-fKL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pyp-cJ-ICO"/>
+                    <constraint firstAttribute="bottom" secondItem="Dv5-AU-fMe" secondAttribute="bottom" id="x8e-WB-gah"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="leftLabel" destination="Dv5-AU-fMe" id="sk4-Q2-6AS"/>
+                <outlet property="rightLabel" destination="2ZN-tg-yjA" id="rdK-aa-4He"/>
+            </connections>
+            <point key="canvasLocation" x="81" y="53.5"/>
+        </tableViewCell>
+    </objects>
+</document>

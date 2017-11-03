@@ -1,0 +1,21 @@
+//
+//  MStoreInfoData.h
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MBaseObjectData.h"
+
+@interface MStoreInfoData : MBaseObjectData
+
+
+@property (nonatomic, assign) int storeid;
+@property (nonatomic, copy) NSString *storename;
+@property (nonatomic, copy) NSString *logopic;
+@property (nonatomic, copy) NSString *signpic;
+@property (nonatomic, copy) NSString *descriptionStr;
+@property (nonatomic, assign) int styleid;
+
+@end

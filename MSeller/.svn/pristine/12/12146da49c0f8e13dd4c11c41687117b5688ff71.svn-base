@@ -1,0 +1,31 @@
+//
+//  MStoreHeadController.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/30.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreHeadController.h"
+
+#import "MStoreHeadModel.h"
+
+
+@interface MStoreHeadController ()
+{
+    MStoreHeadModel *_headModel;
+}
+
+@end
+
+@implementation MStoreHeadController
+
+
+- (void)initController
+{
+    _headModel = [[MStoreHeadModel alloc] init];
+    [self registerModel:_headModel];
+}
+
+
+@end

@@ -1,0 +1,347 @@
+//
+//  MSearchResultViewPage.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/23.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MSearchResultViewPage.h"
+
+
+#import "MSearchTitleView.h"
+#import "MSearchResultTableViewCell.h"
+#import "MSearchResultModel.h"
+#import "MSearchResultData.h"
+#import "MShareAlertView.h"
+
+
+@interface MSearchResultViewPage ()
+<UITableViewDelegate, UITableViewDataSource,
+MBaseControllerDelegate,MSearchTitleViewDelegate,
+MSearchResultTableViewCellDelegate>
+{
+    NSArray *historyArray;              //搜索历史记录数组
+    MSearchTitleView *searchTitleView;  //搜索导航titleview
+    MSearchResultModel *resultModel;
+}
+
+@end
+
+@implementation MSearchResultViewPage
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self registController:@"MSearchResultController"];
+        resultModel = [self.controller getModelFromListByName:@"MSearchResultModel"];
+    }
+    return self;
+}
+
+
+- (void)initWithParam:(NSDictionary *)paramInfo
+{
+    self.searchValue = paramInfo[@"searchValue"];
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.controller.delegate = self;
+
+    [self setNavTitleView];
+    
+    [self.resultTable registerNib:[UINib nibWithNibName:NSStringFromClass([MSearchResultTableViewCell class]) bundle:nil] forCellReuseIdentifier:[MSearchResultTableViewCell getCellIdentifier]];
+    self.resultTable.mj_header = [MRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestSearchResultListData)];
+    self.resultTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(requestSearchResultListMoreData)];
+    self.resultTable.mj_footer.hidden = YES;
+    
+    [MDiyHudView showDiyHudWithTitleWith:nil superViewWith:self.view];
+    [self requestSearchResultListData];
+}
+
+
+#pragma mark -
+#pragma mark - 网络请求
+//刷新搜索列表
+- (void)requestSearchResultListData
+{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:self.searchValue forKey:@"search"];
+    [dic setObject:@"1" forKey:@"pagenum"];
+    [dic setObject:@"10" forKey:@"pagesize"];
+    [self.controller sendMessageID:mRequestSearchResultTag messageInfo:dic];
+}
+
+//加载更多搜索列表
+- (void)requestSearchResultListMoreData
+{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:self.searchValue forKey:@"search"];
+    [dic setObject:@"1" forKey:@"pagenum"];
+    [dic setObject:@"10" forKey:@"pagesize"];
+    [self.controller sendMessageID:mRequestSearchResultMoreTag messageInfo:dic];
+}
+
+
+#pragma mark 设置导航条
+- (void)setNavTitleView
+{
+    searchTitleView = [MSearchTitleView initSearchTitleViewWithNib:self];
+    [searchTitleView updateInputText:self.searchValue];
+    self.navigationItem.titleView = searchTitleView;
+}
+
+
+#pragma mark MSearchTitleViewDelegate
+/**
+ *  点击搜索回调
+ *
+ *  @param searchValue 搜索内容
+ */
+- (void)search_ChangeWithValue:(NSString *)searchValue
+{
+    if ([searchValue length] <= 0)
+    {
+        [self.view m_makeToast:@"搜索内容不能为空" duration:3];
+
+        return;
+    }
+    [self searchText:searchValue];
+}
+
+
+#pragma 本地存储历史搜索记录
+-(void)searchText:(NSString *)searchStr
+{
+    historyArray = [UserDefaultsObj arrayForKey:MUD_Search_History];
+
+    NSMutableArray *searchArray = [[NSMutableArray alloc] init];
+    if (historyArray)
+    {
+        searchArray = [historyArray mutableCopy];
+    }
+    
+    //去重
+    for (int i = 0; i < [searchArray count]; i ++)
+    {
+        if ([searchStr isEqualToString:searchArray[i]])
+        {
+            [searchArray removeObjectAtIndex:i];
+        }
+    }
+    
+    [searchArray insertObject:searchStr atIndex:0];
+    
+    if ([historyArray count] > 20)
+    {
+        [searchArray removeLastObject];
+    }
+    
+    //将上述数据全部存储到NSUserDefaults中
+    [UserDefaultsObj setObject:searchArray forKey:MUD_Search_History];
+    
+    self.searchValue = searchStr;
+    
+    [MDiyHudView showDiyHudWithTitleWith:nil superViewWith:self.view];
+    [self requestSearchResultListData];
+}
+
+
+#pragma mark MSearchResultTableViewCellDelegate
+- (void)clickSearchCellBtnActionWithType:(SearchCell_Type)type index:(NSInteger)index
+{
+    if (type == SearchCell_Type_Share) {
+        //分享
+        if (resultModel.resultListArray.count > index) {
+            MSearchResultData *data = [resultModel.resultListArray objectAtIndex:index];
+            
+            MGoodsShareModel *model = [[MGoodsShareModel alloc] init];
+            model.shareProfit = [NSString stringWithFormat:@"%0.2f", data.goodsprofit];
+            model.shareUrl = STR_IS_NULL(data.goodsdetaillink);
+            [MShareAlertView showShareAlertViewWith:MAppDelegateObj.window delegate:self data:model];
+        }
+
+    }else if (type == SearchCell_Type_Add){
+        //添加推荐
+        [self requestAddRecommDataWithindex:index];
+    }else{
+        //关注
+        [self requestAddLikeDataWithindex:index];
+    }
+}
+
+
+//添加关注
+- (void)requestAddLikeDataWithindex:(NSInteger)index
+{
+    MSearchResultData *data = [resultModel.resultListArray objectAtIndex:index];
+
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:[NSString stringWithFormat:@"%d", data.spuid] forKey:@"shopid"];
+    [dic setObject:@"0" forKey:@"status"];
+    [self.controller sendMessageID:mRequestSearchAddLikeTag messageInfo:dic];
+}
+
+//添加推荐
+- (void)requestAddRecommDataWithindex:(NSInteger)index
+{
+    MSearchResultData *data = [resultModel.resultListArray objectAtIndex:index];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:[NSString stringWithFormat:@"%d", data.spuid] forKey:@"shopid"];
+    [dic setObject:@"1" forKey:@"status"];
+    [self.controller sendMessageID:mRequestSearchRecommTag messageInfo:dic];
+}
+
+#pragma mark - 点击分享回调
+#pragma mark - MShareAlertViewDelegate
+
+/**
+ 分享按钮响应回调
+ 
+ @param type 类型
+ */
+- (void)share_selectedWithType:(Share_Selected_Type)type data:(MGoodsShareModel *)shareData
+{
+    [[MShareSDKManger sharedMShareSDKManger] shareActionType:type vc:self data:shareData];
+}
+
+
+#pragma mark -
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [searchTitleView textFieldResignFirstResponder];
+}
+
+#pragma mark - UITableViewDelegate、UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [resultModel.resultListArray count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MSearchResultTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MSearchResultTableViewCell getCellIdentifier]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.delegate = self;
+    MSearchResultData *resultData = resultModel.resultListArray[indexPath.row];
+    [cell updateSearchResultCellWithData:resultData index:indexPath.row];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat rowHeight = 0;
+    rowHeight = mLayout_Ratio(141);
+    return rowHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    [self pushPageWithName:@"MGoodsDetailViewPage" animation:YES];
+}
+
+
+#pragma mark MBaseControllerDelegate
+#pragma mark 发送请求完成回调方法
+- (void)update:(id)data msgID:(int)msgid faildCode:(EDataStatusCode)errCode
+{
+    [MDiyHudView removeHudWith:self.view];
+    [MPromptView remove_promptAlertViewWith:self.resultTable];
+    [self.resultTable.mj_header endRefreshing];
+    [self.resultTable.mj_footer endRefreshing];
+
+    switch (errCode) {
+        case eDataCodeSuccess:
+        {
+            if (msgid == mRequestSearchResultTag)
+            {
+                if (resultModel.resultListArray.count == 0) {
+                    [MPromptView show_promptAlertViewWith:self.resultTable typeWith:M_PromptAlert_Type_Failure messageWith:mLocalizedString(@"mGoods_Home_CateList_Null")];
+                }else if (resultModel.resultListArray.count%[mRequestPageSize intValue] == 0) {
+                    self.resultTable.mj_footer.hidden = NO;
+                }else{
+                    self.resultTable.mj_footer.hidden = YES;
+                }
+            }
+            else if (msgid == mRequestSearchResultMoreTag)
+            {
+                if (resultModel.resultListArray.count%[mRequestPageSize intValue] > 0 ) {
+                    self.resultTable.mj_footer.hidden = YES;
+                }else if (resultModel.resultListArray.count%[mRequestPageSize intValue] == 0 ){
+                    self.resultTable.mj_footer.hidden = NO;
+                }
+                
+                [self.resultTable reloadData];
+            }
+            else if (msgid == mRequestSearchRecommTag)
+            {
+                [self.view m_makeToast:mLocalizedString(@"mAlert_Goods_Recomm_Success") duration:1];
+            }
+            else if (msgid == mRequestSearchAddLikeTag)
+            {
+                [self.view m_makeToast:mLocalizedString(@"mAlert_Goods_Like_Success") duration:1];
+            }
+            [self.resultTable reloadData];
+        }
+            break;
+        case eDataCodeServiceFaild:
+        {
+            if (msgid == mRequestSearchResultTag)
+            {
+                self.resultTable.mj_footer.hidden = YES;
+                [MPromptView show_promptAlertViewWith:self.view typeWith:M_PromptAlert_Type_Failure messageWith:mLocalizedString(@"mAlert_Request_Error") blockWith:^{
+                    [MPromptView remove_promptAlertViewWith:self.resultTable];
+                    [self requestSearchResultListData];
+                }];
+                
+            }
+            else
+            {
+                [self.view m_makeToast:[MUtilities toastResponseMessage:data]];
+            }
+        }
+            break;
+        case eDataCodeFaild:
+        {
+            if (msgid == mRequestSearchResultTag)
+            {
+                self.resultTable.mj_footer.hidden = YES;
+                [MPromptView show_promptAlertViewWith:self.view typeWith:M_PromptAlert_Type_Failure messageWith:mLocalizedString(@"mAlert_Request_Error") blockWith:^{
+                    [MPromptView remove_promptAlertViewWith:self.resultTable];
+                    [self requestSearchResultListData];
+                }];
+            }
+            else
+            {
+                [self.view m_makeToast:mLocalizedString(@"mAlert_Request_Error")];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
+
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+
+@end

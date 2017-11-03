@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MDiyHudView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehy-iQ-eiM">
+                    <rect key="frame" x="135" y="281" width="100" height="100"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hud_background" translatesAutoresizingMaskIntoConstraints="NO" id="Pvo-yv-erX">
+                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I6k-r0-uas">
+                            <rect key="frame" x="30" y="30" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="Hng-XI-xek"/>
+                                <constraint firstAttribute="height" constant="40" id="PDH-bF-JaO"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Pvo-yv-erX" firstAttribute="leading" secondItem="ehy-iQ-eiM" secondAttribute="leading" id="0dV-jz-fVk"/>
+                        <constraint firstItem="I6k-r0-uas" firstAttribute="centerX" secondItem="ehy-iQ-eiM" secondAttribute="centerX" id="37w-9r-Zu7"/>
+                        <constraint firstItem="Pvo-yv-erX" firstAttribute="top" secondItem="ehy-iQ-eiM" secondAttribute="top" id="40x-H7-G0L"/>
+                        <constraint firstAttribute="trailing" secondItem="I6k-r0-uas" secondAttribute="trailing" priority="900" constant="30" id="7bS-e5-IMx"/>
+                        <constraint firstItem="I6k-r0-uas" firstAttribute="leading" secondItem="ehy-iQ-eiM" secondAttribute="leading" priority="900" constant="30" id="Kxl-3u-j8q"/>
+                        <constraint firstAttribute="width" secondItem="ehy-iQ-eiM" secondAttribute="height" multiplier="1:1" id="Kzl-kz-5Jr"/>
+                        <constraint firstAttribute="trailing" secondItem="Pvo-yv-erX" secondAttribute="trailing" id="UeN-fg-NmF"/>
+                        <constraint firstItem="I6k-r0-uas" firstAttribute="centerY" secondItem="ehy-iQ-eiM" secondAttribute="centerY" id="j7s-g5-TaE"/>
+                        <constraint firstAttribute="bottom" secondItem="Pvo-yv-erX" secondAttribute="bottom" id="kXO-33-nDz"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="0.19801476883561644" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ehy-iQ-eiM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="900" constant="135" id="B2c-IB-dme"/>
+                <constraint firstItem="ehy-iQ-eiM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-2.5" id="IuS-t3-2Hj"/>
+                <constraint firstItem="ehy-iQ-eiM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-2.5" id="jTH-6i-jwE"/>
+            </constraints>
+            <connections>
+                <outlet property="bottomView" destination="ehy-iQ-eiM" id="J6v-KA-Z0j"/>
+                <outlet property="showHudImage" destination="I6k-r0-uas" id="Jkk-K0-X0J"/>
+            </connections>
+            <point key="canvasLocation" x="99.5" y="42.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="hud_background" width="104" height="104"/>
+    </resources>
+</document>

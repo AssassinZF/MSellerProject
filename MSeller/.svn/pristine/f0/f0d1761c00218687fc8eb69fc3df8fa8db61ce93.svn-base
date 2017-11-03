@@ -1,0 +1,174 @@
+//
+//  MPersonalCenterViewPage.m
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/26.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MPersonalCenterViewPage.h"
+#import "MPersonalCenterHeaderView.h"
+#import "UIScrollView+ScalableCover.h"
+#import "MPersonalCenterCell.h"
+#import "MPersonalCenterController.h"
+
+@interface MPersonalCenterViewPage () <UITableViewDelegate, UITableViewDataSource>
+{
+    MPersonalCenterHeaderView *_headerView;
+    BOOL _isRequestUserInfo;
+}
+
+@property (weak, nonatomic) IBOutlet UITableView *pcTableView;
+
+@end
+
+@implementation MPersonalCenterViewPage
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self registController:@"MPersonalCenterController"];
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_isRequestUserInfo) {
+        [self requestUserInfoData];
+        _isRequestUserInfo = NO;
+    }
+    
+    [self requestMyInfoData];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+    self.navigationController.navigationBarHidden = YES;
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    _isRequestUserInfo = NO;
+    
+    _headerView = [[MPersonalCenterHeaderView alloc] init];
+    self.pcTableView.tableHeaderView = _headerView;
+    [self.pcTableView addScalableCoverWithColor:MC_Orange_Color heightWith:_headerView.height];
+    [self.pcTableView registerNib:[UINib nibWithNibName:[MPersonalCenterCell getCellIdentifier] bundle:nil] forCellReuseIdentifier:[MPersonalCenterCell getCellIdentifier]];
+    
+    [self requestUserInfoData];
+}
+
+/**
+ 获取用户信息
+ */
+- (void)requestUserInfoData
+{
+    [self.controller sendMessageID:mRequestGetUserInfoTag messageInfo:nil];
+}
+
+/**
+ 获取收益信息
+ */
+- (void)requestMyInfoData
+{
+    [self.controller sendMessageID:mRequestGetMyInfoTag messageInfo:nil];
+}
+
+/**
+ 设置状态栏颜色
+ 
+ @return 颜色
+ */
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+    //    return UIStatusBarStyleDefault;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+
+#pragma mark -
+#pragma mark -  UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [MPersonalCenterCell getCellHeihgt];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MPersonalCenterCell *cell = [tableView dequeueReusableCellWithIdentifier:[MPersonalCenterCell getCellIdentifier]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.row == 0) {
+        [cell updateCellWith:mLocalizedString(@"mPersonal_BankCar") imageWith:mGetImage(@"personal_center_bank")];
+    }else if (indexPath.row == 1){
+        [cell updateCellWith:mLocalizedString(@"mPersonal_Numbr") imageWith:mGetImage(@"personal_center_service")];
+    }else{
+        [cell updateCellWith:mLocalizedString(@"mPersonal_Set") imageWith:mGetImage(@"personal_center_set")];
+    }
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    switch (indexPath.row) {
+        case 0:
+        {
+            //跳转银行卡
+        }
+            break;
+        case 1:
+        {
+            //客服
+        }
+            break;
+        case 2:
+        {
+            //跳转设置
+            _isRequestUserInfo = YES;
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark -
+#pragma mark - 响应
+- (void)update:(id)data msgID:(int)msgid faildCode:(EDataStatusCode)errCode
+{
+    if (errCode == eDataCodeSuccess) {
+        [_headerView updateHeaderView];
+    }else if (errCode == eDataCodeServiceFaild){
+        [self.view m_makeToast:[MUtilities toastResponseMessage:data]];
+    }else{
+        [self.view m_makeToast:mLocalizedString(@"mAlert_Request_Error")];
+    }
+}
+
+@end

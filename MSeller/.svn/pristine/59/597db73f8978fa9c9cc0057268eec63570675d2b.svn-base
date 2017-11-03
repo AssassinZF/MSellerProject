@@ -1,0 +1,283 @@
+//
+//  MGoodsDetailInfoViewPage.m
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/31.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MGoodsDetailInfoViewPage.h"
+#import "MGoodsDetailHeadView.h"
+#import "MGoodsTabDetailCell.h"
+#import "MGoodsDetailPropertyCell.h"
+#import "MGoodsDetailTabView.h"
+#import "MGoodsDetailPropertyView.h"
+#import "MGoodsDetailShareView.h"
+#import "MShareAlertView.h"
+#import "MPhotoBrowser.h"
+
+@interface MGoodsDetailInfoViewPage () <UITableViewDelegate, UITableViewDataSource, MGoodsDetailPropertyViewDelegate, MGoodsDetailHeadViewDelegate>
+{
+    UIButton *_rightBtn;
+    
+    MGoodsDetailHeadView *_headView;
+    MGoodsDetailTabView *_selectedTabView;
+    MGoodsDetailPropertyView *_selectedPropertyView;
+    MGoodsDetailShareView *_detailShareView;
+    NSInteger _selectedTab;  //0商品详情   1规格参数   2购买须知
+
+    NSArray *_imagesURLStrings;
+}
+
+@property (weak, nonatomic) IBOutlet UITableView *dTableView;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIButton *likeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *toCarBtn;
+@property (weak, nonatomic) IBOutlet UIButton *purchaseBtn;
+@property (weak, nonatomic) IBOutlet UIButton *recommendBtn;
+@property (weak, nonatomic) IBOutlet UILabel *lootAllLabel;
+
+@end
+
+@implementation MGoodsDetailInfoViewPage
+
+- (void)dealloc
+{
+    _dTableView.delegate = nil;
+    _dTableView.dataSource = nil;
+}
+
+-(void)initWithParam:(NSDictionary *)paramInfo
+{
+    if (paramInfo) {
+        self.spuid = [[paramInfo objectForKey:@"spuid"] intValue];
+    }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+    _selectedTab = 0;
+
+    _imagesURLStrings = @[
+                          @"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=22528817,1858323476&fm=27&gp=0.jpg",
+                          @"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=725515905,2472463078&fm=27&gp=0.jpg",
+                          @"http://img4.imgtn.bdimg.com/it/u=1254822470,3648184938&fm=200&gp=0.jpg",
+                          @"http://dimg09.c-ctrip.com/images/100i070000002enz8ED0A_C_671_10000_Q90.jpg"
+                          ];
+    
+    self.bottomView.layer.shadowOpacity = 0.5;// 阴影透明度
+    self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;// 阴影的颜色
+    self.bottomView.layer.shadowRadius = 3;// 阴影扩散的范围控制
+    self.bottomView.layer.shadowOffset = CGSizeMake(1, 1);// 阴影的范围
+    
+    _headView = [[MGoodsDetailHeadView alloc] init];
+    [_headView updateGoodsDetailView:nil];
+    self.dTableView.tableHeaderView = _headView;
+    
+    [self registerTableViewCell];
+}
+
+- (void)setRightBtn:(UIButton *)rightBtn
+{
+    _rightBtn = rightBtn;
+}
+
+/**
+ cell注册
+ */
+- (void)registerTableViewCell
+{
+    [self.dTableView registerNib:[UINib nibWithNibName:[MGoodsTabDetailCell getCellIdentifier] bundle:nil] forCellReuseIdentifier:[MGoodsTabDetailCell getCellIdentifier]];
+    
+    [self.dTableView registerNib:[UINib nibWithNibName:[MGoodsDetailPropertyCell getCellIdentifier] bundle:nil] forCellReuseIdentifier:[MGoodsDetailPropertyCell getCellIdentifier]];
+}
+
+/**
+ 右侧分享按钮响应
+ */
+- (void)rightBtnShareAction
+{
+    MGoodsShareModel *model = [[MGoodsShareModel alloc] init];
+    model.shareProfit = [NSString stringWithFormat:@"2.00"];
+#warning 数据正常返回时替换掉
+    model.shareUrl = STR_IS_NULL(@"http://www.baidu.com");
+    [MShareAlertView showShareAlertViewWith:MAppDelegateObj.window delegate:self data:model];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+#pragma mark -
+#pragma mark - MShareAlertViewDelegate
+
+/**
+ 分享按钮响应回调
+ 
+ @param type 类型
+ */
+- (void)share_selectedWithType:(Share_Selected_Type)type data:(MGoodsShareModel *)shareData
+{
+    [[MShareSDKManger sharedMShareSDKManger] shareActionType:type vc:self data:shareData];
+}
+
+#pragma mark -
+#pragma mark - MGoodsDetailHeadViewDelegate
+- (void)goodsDetailHeadSelectItemAtIndex:(NSInteger)index
+{
+    MPhotoBrowser *photoView = [[MPhotoBrowser alloc] init];
+    photoView.urlImgArr = _imagesURLStrings;
+    photoView.indexTag = index;
+    [photoView show];
+}
+
+#pragma mark -
+#pragma mark -  MGoodsDetailPropertyViewDelegate
+
+/**
+ 点击规格回调
+ */
+- (void)goodsDetailChangeProperty
+{
+    
+}
+
+#pragma mark -
+#pragma mark -  MGoodsDetailTabViewDelegate
+
+/**
+ 选择TAB
+ 
+ @param type MGoodsDetail_Tab_Change_Type
+ */
+- (void)goodsDetailTabChange:(MGoodsDetail_Tab_Change_Type)type
+{
+    if (type == MTab_Type_Detail) {
+        _selectedTab = 0;
+    }else if (type == MTab_Type_Property){
+        _selectedTab = 1;
+    }else{
+        _selectedTab = 2;
+    }
+    
+    [self.dTableView reloadData];
+}
+
+
+#pragma mark -
+#pragma mark -  UITableViewDelegate、UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 0;
+    }else if (section == 1) {
+        return 0;
+    }else{
+        if (_selectedTab == 0) {
+            //详情
+            return 2;
+        }else if (_selectedTab == 1){
+            //属性
+            return 1;
+        }else{
+            //说明
+            return 1;
+        }
+    }
+    
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        if (!_detailShareView) {
+            _detailShareView = [MGoodsDetailShareView initWith:self];
+        }
+        return _detailShareView;
+    }else if (section == 1) {
+        if (!_selectedPropertyView) {
+            _selectedPropertyView = [MGoodsDetailPropertyView initWith:self];
+        }
+        return _selectedPropertyView;
+    }else{
+        if (!_selectedTabView) {
+            _selectedTabView = [MGoodsDetailTabView initWith:self];
+        }
+        return _selectedTabView ;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return [MGoodsDetailShareView getGoodsDetailShareViewHeight];
+    }else if (section == 1) {
+        return [MGoodsDetailPropertyView getGoodsDetailPropertyViewHeight];
+    }else{
+        return [MGoodsDetailTabView getGoodsDetailTabViewHeight];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_selectedTab == 0) {
+        //详情
+        return [MGoodsTabDetailCell getCellHeihgt];
+    }else if (_selectedTab == 1){
+        //属性
+        return [MGoodsDetailPropertyCell getPropertyCellHeight:@[@"1",@"1",@"1"]];
+    }else{
+        //说明
+        return [MGoodsTabDetailCell getCellHeihgt];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_selectedTab == 0) {
+        //详情
+        MGoodsTabDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:[MGoodsTabDetailCell getCellIdentifier]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell updateViewCell:[_imagesURLStrings objectAtIndex:indexPath.row]];
+        return cell;
+    }else if (_selectedTab == 1){
+        //属性
+        MGoodsDetailPropertyCell *cell = [tableView dequeueReusableCellWithIdentifier:[MGoodsDetailPropertyCell getCellIdentifier]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell updateViewWith:@[@"1",@"1",@"1"]];
+        return cell;
+    }else{
+        //说明
+        MGoodsTabDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:[MGoodsTabDetailCell getCellIdentifier]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell updateViewCell:[_imagesURLStrings objectAtIndex:indexPath.row]];
+        return cell;
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+@end

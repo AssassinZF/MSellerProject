@@ -1,0 +1,138 @@
+//
+//  MStoreManageSectionView.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/28.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreManageSectionView.h"
+
+
+@interface MStoreManageSectionView ()
+{
+    UIView *_lineView;
+}
+
+@end
+
+@implementation MStoreManageSectionView
+
+
++ (MStoreManageSectionView *)initSectionViewWithNib:(id)delegate
+{
+    MStoreManageSectionView *sectionView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MStoreManageSectionView class]) owner:self options:nil] firstObject];
+    return sectionView;
+}
+
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    self.width = Screen_Width;
+        
+    self.bottomBtnView.frame = CGRectMake(0, 0, self.width, mLayout_Ratio(48));
+    self.choicenessBtn.frame = CGRectMake(0, 0, self.bottomBtnView.width/2, self.bottomBtnView.height);
+    self.attentionBtn.frame = CGRectMake(self.choicenessBtn.right, self.choicenessBtn.top, self.choicenessBtn.width, self.choicenessBtn.height);
+    self.verticalLineView.frame = CGRectMake(self.attentionBtn.left, (self.bottomBtnView.height-mLayout_Ratio(25))/2, 1, mLayout_Ratio(25));
+    
+    self.bottomLineView.frame = CGRectMake(0, self.bottomBtnView.bottom, self.width, 1);
+    
+    self.choicenessSectionView.frame = CGRectMake(0, self.bottomBtnView.bottom, self.width, mLayout_Ratio(30));
+    self.choicenessLeftTextLB.frame = CGRectMake(mLayout_Ratio(17), 0, mLayout_Ratio(100), self.choicenessSectionView.height);
+    self.storeSortLB.frame = CGRectMake(self.width-mLayout_Ratio(30)-mLayout_Ratio(17), 0, mLayout_Ratio(30), self.choicenessLeftTextLB.height);
+    self.storeSortImgView.frame = CGRectMake(self.storeSortLB.left-mLayout_Ratio(7)-mLayout_Ratio(17), (self.choicenessSectionView.height-mLayout_Ratio(17))/2, mLayout_Ratio(17), mLayout_Ratio(17));
+    self.storeSortBtn.frame = CGRectMake(self.storeSortImgView.left, 0, self.storeSortLB.right-self.storeSortImgView.left, self.height);
+
+    _lineView = [[UIView alloc] init];
+    _lineView.frame = CGRectMake((self.choicenessBtn.right-mLayout_Ratio(43))/2, self.bottomBtnView.height-mLayout_Ratio(2), mLayout_Ratio(43), mLayout_Ratio(2));
+    _lineView.backgroundColor = MC_DarkGray_Color;
+    [self addSubview:_lineView];
+    self.choicenessBtn.selected = YES;
+    self.attentionBtn.selected = NO;
+    self.storeSortBtn.selected = NO;
+}
+
+
+
+- (void)updateSectionSubviewsWithData:(MStoreManageModel *)model
+{
+    if (!model.isChoiceness)
+    {
+        self.choicenessSectionView.hidden = NO;
+        self.storeSortLB.hidden = YES;
+        self.storeSortImgView.hidden = YES;
+    }
+    else
+    {
+        self.choicenessSectionView.hidden = NO;
+        self.storeSortLB.hidden = NO;
+        self.storeSortImgView.hidden = NO;
+        
+        if (model.isSort)
+        {
+            self.storeSortLB.text = [NSString stringWithFormat:@"完成"];
+            self.storeSortLB.textColor = MC_Orange_Color;
+            self.storeSortImgView.hidden = YES;
+        }
+        else
+        {
+            self.storeSortLB.text = [NSString stringWithFormat:@"排序"];
+            self.storeSortLB.textColor = MC_AlertText_Color;
+            self.storeSortImgView.hidden = NO;
+        }
+    }
+}
+
+
+- (void)setActionBtnLineWithBtnType:(StoreManageClickType)type
+{
+    if (type == StoreManageClickTypeChoiceness)
+    {
+        _lineView.left = (self.choicenessBtn.right-mLayout_Ratio(43))/2;
+    }
+    else
+    {
+        _lineView.left = self.choicenessBtn.right+(self.attentionBtn.width-mLayout_Ratio(43))/2;
+    }
+}
+
+
+- (IBAction)changeChoicenessBtnEvent:(StoreManageClickType)type
+{
+    self.choicenessBtn.selected = YES;
+    self.attentionBtn.selected = NO;
+    [self setActionBtnLineWithBtnType:type];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeSelectBtnActionWithType:)])
+    {
+        [self.delegate changeSelectBtnActionWithType:StoreManageClickTypeChoiceness];
+    }
+}
+
+
+- (IBAction)changeAttentionBtnEvent:(StoreManageClickType)type
+{
+    self.choicenessBtn.selected = NO;
+    self.attentionBtn.selected = YES;
+    [self setActionBtnLineWithBtnType:type];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeSelectBtnActionWithType:)])
+    {
+        [self.delegate changeSelectBtnActionWithType:StoreManageClickTypeAttention];
+    }
+}
+
+
+- (IBAction)clickSortBtnEvent:(id)sender
+{
+    self.storeSortBtn.selected = !self.storeSortBtn.selected;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeSelectBtnActionWithType:)])
+    {
+        [self.delegate changeSelectBtnActionWithType:StoreManageClickTypeSort];
+    }
+}
+
+
+
+@end

@@ -1,0 +1,133 @@
+//
+//  MRefreshHeader.m
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/24.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MRefreshHeader.h"
+
+@interface MRefreshHeader ()
+
+@property (strong, nonatomic) UIImageView *logoImageView;
+
+@end
+
+@implementation MRefreshHeader
+
+#pragma mark - 重写父类的方法
+- (void)prepare
+{
+    [super prepare];
+    
+    // 设置控件的高度
+    self.mj_h = 60;
+    
+    //创建UIImageView
+    self.logoImageView = [[UIImageView alloc] initWithImage:mGetImage(@"step1")];
+    [self addSubview:self.logoImageView];
+    self.backgroundColor = [UIColor whiteColor];
+}
+
+/**
+ *  摆放子控件
+ */
+- (void)placeSubviews
+{
+    [super placeSubviews];
+
+    self.logoImageView.size = CGSizeMake(30, 30);
+    self.logoImageView.centerX = self.centerX;
+    self.logoImageView.top = 15;
+}
+
+#pragma mark 监听scrollView的contentOffset改变
+- (void)scrollViewContentOffsetDidChange:(NSDictionary *)change
+{
+    [super scrollViewContentOffsetDidChange:change];
+}
+
+#pragma mark 监听scrollView的contentSize改变
+- (void)scrollViewContentSizeDidChange:(NSDictionary *)change
+{
+    [super scrollViewContentSizeDidChange:change];
+}
+
+#pragma mark 监听scrollView的拖拽状态改变
+- (void)scrollViewPanStateDidChange:(NSDictionary *)change
+{
+    [super scrollViewPanStateDidChange:change];
+}
+
+#pragma mark 监听控件的刷新状态
+- (void)setState:(MJRefreshState)state
+{
+    MJRefreshCheckState;
+    
+    switch (state) {
+        case MJRefreshStateIdle:
+        {
+            [self endRotaion];
+            self.logoImageView.image = mGetImage(@"step1");
+        }
+            break;
+        case MJRefreshStatePulling:
+        {
+            [self endRotaion];
+            self.logoImageView.image = mGetImage(@"step14");
+        }
+            break;
+        case MJRefreshStateRefreshing:
+        {
+            self.logoImageView.image = mGetImage(@"step14");
+            [self rotate360DegreeWithImageView];
+            
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark 监听拖拽比例（控件被拖出来的比例）
+- (void)setPullingPercent:(CGFloat)pullingPercent
+{
+    [super setPullingPercent:pullingPercent];
+    [self setImageViewWith:pullingPercent];
+}
+
+- (void)setImageViewWith:(CGFloat)pullingPercent
+{
+    if (pullingPercent >= 0 && pullingPercent <= 1) {
+        int index = 14*pullingPercent;
+        NSString *imageStr = [NSString stringWithFormat:@"step%d", index];
+        self.logoImageView.image = mGetImage(imageStr);
+    }
+}
+
+
+//图片360°选装动画
+-(void)rotate360DegreeWithImageView {
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"]; //让其在z轴旋转
+    rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 ];//旋转角度
+    rotationAnimation.duration = 1; //旋转周期
+    rotationAnimation.cumulative = YES;//旋转累加角度
+    rotationAnimation.repeatCount = 100000;//旋转次数
+    [self.logoImageView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
+
+- (void)endRotaion
+{
+    [self.logoImageView.layer removeAllAnimations];
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+@end

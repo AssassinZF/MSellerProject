@@ -1,0 +1,82 @@
+//
+//  MStoreInfoTableViewCell.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreInfoTableViewCell.h"
+
+@implementation MStoreInfoTableViewCell
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    self.leftTextLB.font = [MUtilities setFontSizeWith:15.0];
+}
+
+
+- (void)updateSubviewsPropertyWithModel:(MStoreInfoModel *)model
+{
+    self.leftTextLB.text = model.leftTextStr;
+    self.rightTextLB.text = model.rightTextStr;
+    
+    switch (model.type)
+    {
+        case MStoreInfoCellTypeStoreName:
+        {
+            self.rightTextLB.hidden = NO;
+            self.storeLogoImgView.hidden = YES;
+            self.storeImageView.hidden = YES;
+            self.rightTextLB.font = [MUtilities setFontSizeWith:14.0];
+            self.rightTextLB.textColor = MC_DarkGray_Color;
+        }
+            break;
+        case MStoreInfoCellTypeStoreLogo:
+        {
+            self.rightTextLB.hidden = YES;
+            self.storeLogoImgView.hidden = NO;
+            self.storeImageView.hidden = YES;
+        }
+            break;
+        case MStoreInfoCellTypeStoreDesc:
+        {
+            self.rightTextLB.hidden = YES;
+            self.storeLogoImgView.hidden = YES;
+            self.storeImageView.hidden = YES;
+            self.rightTextLB.font = [MUtilities setFontSizeWith:14.0];
+            self.rightTextLB.textColor = MC_PlaceGray_Color;
+        }
+            break;
+        case MStoreInfoCellTypeStoreImage:
+        {
+            self.rightTextLB.hidden = YES;
+            self.storeLogoImgView.hidden = YES;
+            self.storeImageView.hidden = NO;
+        }
+            break;
+        case MStoreInfoCellTypeMyOrder:
+        {
+            self.rightTextLB.hidden = NO;
+            self.storeLogoImgView.hidden = YES;
+            self.storeImageView.hidden = YES;
+            self.rightTextLB.font = [MUtilities setFontSizeWith:14.0];
+            self.rightTextLB.textColor = MC_AlertText_Color;
+        }
+            break;
+            
+            
+        default:
+            break;
+    }
+}
+
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+}
+
+@end

@@ -1,0 +1,54 @@
+//
+//  UIImage+Extend.h
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/19.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+typedef void(^DataBlock)(NSData  *resultData);
+
+
+@interface UIImage (Extend)
+
+//图片拼接
++ (UIImage *)combine:(UIImage*)leftImage :(UIImage*)rightImage;
+
+//等比例缩放
+- (UIImage *)scaleToSize:(CGSize)size;
+
+/**
+ *  压缩图片到指定尺寸
+ *
+ *  @param image 目标图片
+ *  @param size  目标尺寸大小（最大值）
+ *
+ */
++ (void)compressOriginalImage:(UIImage *)image toSize:(CGSize)size block:(DataBlock)DataBlock;
+
+
+/**
+ *  压缩图片到指定尺寸大小
+ *
+ *  @param image 原始图片
+ *  @param targetSize  目标大小
+ *
+ *  @return 生成图片
+ */
++ (UIImage*)imageByScalingAndCroppingForImage:(UIImage *)image size:(CGSize)targetSize;
+
+
+/**
+ *  压缩图片到指定文件大小
+ *
+ *  @param image 目标图片
+ *  @param size  目标大小（最大值）
+ *
+ *  @return 返回的图片文件
+ */
++ (NSData *)compressOriginalImage:(UIImage *)image toMaxDataSizeKBytes:(CGFloat)size;
+
+
+@end

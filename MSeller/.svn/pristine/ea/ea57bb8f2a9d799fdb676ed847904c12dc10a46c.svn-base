@@ -1,0 +1,92 @@
+//
+//  MGoodsDetailShareInfoView.m
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/25.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MGoodsDetailShareInfoView.h"
+#import "MGoodsImageAndTextCell.h"
+
+@interface MGoodsDetailShareInfoView () <UITableViewDelegate, UITableViewDataSource>
+{
+    NSArray *_showArray;
+}
+@property (weak, nonatomic) IBOutlet UITableView *shareTableView;
+
+@end
+
+@implementation MGoodsDetailShareInfoView
+
+- (void)dealloc
+{
+    _shareTableView.delegate = nil;
+    _shareTableView.dataSource = nil;
+    _delegate = nil;
+}
+
++ (MGoodsDetailShareInfoView *)getShareInfoViewWith:(CGRect)frame delegate:(id)delegate
+{
+    MGoodsDetailShareInfoView *view = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MGoodsDetailShareInfoView class]) owner:self options:nil] lastObject];
+    view.delegate = delegate;
+    view.frame = frame;
+    return view;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.shareTableView.delegate = self;
+    self.shareTableView.dataSource = self;
+    [self registCell];
+}
+
+- (void)registCell
+{
+    [self.shareTableView registerNib:[UINib nibWithNibName:[MGoodsImageAndTextCell getCellIdentifier] bundle:nil] forCellReuseIdentifier:[MGoodsImageAndTextCell getCellIdentifier]];
+}
+
+- (void)updateShareView:(NSArray *)array
+{
+    _showArray = array;
+    [self.shareTableView reloadData];
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+
+/**
+ UITabeleView代理方法设置
+ */
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _showArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [MGoodsImageAndTextCell getGoodsImageAndTextCellHeight:nil];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MGoodsImageAndTextCell *cell = [tableView dequeueReusableCellWithIdentifier:[MGoodsImageAndTextCell getCellIdentifier]];
+    [cell updateViewCell:@""];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+}
+
+@end

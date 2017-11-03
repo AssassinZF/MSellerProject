@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+            timestampString = "531370170.035284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "-sendRequestUploadStoreLogoWithMsgID:msgInfo:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+            timestampString = "531370170.035284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "-sendRequestUploadStoreLogoWithMsgID:msgInfo:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+            timestampString = "531370170.035284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "-sendRequestUploadStoreLogoWithMsgID:msgInfo:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+            timestampString = "531370170.035284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "-sendRequestUploadStoreLogoWithMsgID:msgInfo:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+            timestampString = "531369566.920387"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "-sendRequestUploadStoreLogoWithMsgID:msgInfo:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[MStoreInfoController sendRequestUploadStoreLogoWithMsgID:msgInfo:]"
+                  moduleName = "MSeller"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/1yyg/Desktop/MSeller/MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+                  timestampString = "531371421.431549"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__68-[MStoreInfoController sendRequestUploadStoreLogoWithMsgID:msgInfo:]_block_invoke"
+                  moduleName = "MSeller"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/1yyg/Desktop/MSeller/MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+                  timestampString = "531371421.432897"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+            timestampString = "531369568.787869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "-sendRequestUploadStoreLogoWithMsgID:msgInfo:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[MStoreInfoController sendRequestUploadStoreLogoWithMsgID:msgInfo:]"
+                  moduleName = "MSeller"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/1yyg/Desktop/MSeller/MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+                  timestampString = "531371421.44376"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "134"
+                  endingLineNumber = "134"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__68-[MStoreInfoController sendRequestUploadStoreLogoWithMsgID:msgInfo:]_block_invoke"
+                  moduleName = "MSeller"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/1yyg/Desktop/MSeller/MSeller/Classes/MCore/MStoreHeadViewPage/MStoreInfoViewPage/MStoreInfoController.m"
+                  timestampString = "531371421.445383"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "135"
+                  endingLineNumber = "135"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Tools/MNetworkManger/MNetworkManger.m"
+            timestampString = "531371404.936052"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "+sendRequestWith:progressBlock:success:failure:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[MNetworkManger sendRequestWith:progressBlock:success:failure:]"
+                  moduleName = "MSeller"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/1yyg/Desktop/MSeller/MSeller/Tools/MNetworkManger/MNetworkManger.m"
+                  timestampString = "531371421.449252"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "146"
+                  endingLineNumber = "146"
+                  offsetFromSymbolStart = "4464">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__64+[MNetworkManger sendRequestWith:progressBlock:success:failure:]_block_invoke.185"
+                  moduleName = "MSeller"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/1yyg/Desktop/MSeller/MSeller/Tools/MNetworkManger/MNetworkManger.m"
+                  timestampString = "531371421.450956"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Tools/MNetworkManger/MNetworkManger.m"
+            timestampString = "531371427.762744"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "+sendRequestWith:progressBlock:success:failure:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSeller/Tools/MNetworkManger/MNetworkManger.m"
+            timestampString = "531370496.895792"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "+sendRequestWith:progressBlock:success:failure:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -1,0 +1,51 @@
+//
+//  MStoreManageModel.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreManageModel.h"
+
+#import "MStoreManageData.h"
+
+
+@implementation MStoreManageModel
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.choicenessListArray = [[NSMutableArray alloc] initWithCapacity:0];
+        self.attentionListArray = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return self;
+}
+
+
+-(void)handleSucessData:(id)dataSource messageID:(int)msgID
+{
+    if (msgID == mRequestChoicenessListTag) {
+        //精选列表解析
+        for (NSDictionary *dic in dataSource) {
+            [self.choicenessListArray addObject:[MStoreManageData yy_modelWithJSON:dic]];
+        }
+    }
+    if (msgID == mRequestAttentionListTag) {
+        //精选列表解析
+        for (NSDictionary *dic in dataSource) {
+            [self.attentionListArray addObject:[MStoreManageData yy_modelWithJSON:dic]];
+        }
+    }
+}
+
+- (void)deleteManageListData
+{
+    [self.choicenessListArray removeAllObjects];
+    [self.attentionListArray removeAllObjects];
+}
+
+
+@end

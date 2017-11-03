@@ -1,0 +1,13 @@
+//
+//  MGoodsDetailController.h
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/20.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MBaseController.h"
+
+@interface MGoodsDetailController : MBaseController
+
+@end

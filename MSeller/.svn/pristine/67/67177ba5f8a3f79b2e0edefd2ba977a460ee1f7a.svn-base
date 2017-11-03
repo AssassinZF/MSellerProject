@@ -1,0 +1,29 @@
+//
+//  MStoreManageModel.h
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MBaseModel.h"
+
+#define mRequestManageListTag          1009     //获取精选/关注列表
+
+@interface MStoreManageModel : MBaseModel
+
+
+
+@property (nonatomic, strong) NSMutableArray *manageListArray;
+
+@property (nonatomic, assign) BOOL isChoiceness;//是否为精选选项
+@property (nonatomic, assign) BOOL isSort;//是否点击排序按钮
+
+
+/**
+ 清除列表数据
+ */
+- (void)deleteManageListData;
+
+
+@end

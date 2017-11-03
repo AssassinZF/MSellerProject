@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MStoreManageTableViewCell" id="KGk-i7-Jjw" customClass="MStoreManageTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="133"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="132"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Dior" translatesAutoresizingMaskIntoConstraints="NO" id="6ef-pN-mnT">
+                        <rect key="frame" x="7" y="16" width="100" height="100"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[减价200元] 2018款(BMW)7系为新时代创变领袖带来更鲜明" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6QE-8x-r7Z">
+                        <rect key="frame" x="115" y="16" width="190" height="36"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="￥888.00 / 约赚￥8.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5z-Ul-Fnw">
+                        <rect key="frame" x="115" y="62" width="190" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="haQ-8M-dyg">
+                        <rect key="frame" x="250" y="85" width="55" height="31"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="piC-Fp-2CI">
+                                <rect key="frame" x="0.0" y="6" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="store_cancel"/>
+                                <connections>
+                                    <action selector="clickCCancelBtnEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uEC-T1-dOd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXb-ft-Khv">
+                                <rect key="frame" x="35" y="6" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="store_share"/>
+                                <connections>
+                                    <action selector="clickCShareBtnEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="of0-aE-gsS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yHC-dZ-1M3">
+                        <rect key="frame" x="122" y="85" width="90" height="31"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGB-tn-29m">
+                                <rect key="frame" x="35" y="6" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="store_add"/>
+                                <connections>
+                                    <action selector="clickAAddBtnEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="q33-Ks-pYb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYu-s7-bQS">
+                                <rect key="frame" x="70" y="6" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="store_share"/>
+                                <connections>
+                                    <action selector="clickAShareBtnEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wcr-aP-Z39"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86a-Qp-WLO">
+                                <rect key="frame" x="0.0" y="6" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="store_delete"/>
+                                <connections>
+                                    <action selector="clickADeleteBtnEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NmK-gK-aEf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GX3-7Q-aFu">
+                        <rect key="frame" x="220" y="85" width="20" height="31"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="if9-WM-YQ0">
+                                <rect key="frame" x="0.0" y="6" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="store_cellSort"/>
+                                <connections>
+                                    <action selector="clickSortBtnEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xg2-Rq-3I0"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="AShareBtn" destination="vYu-s7-bQS" id="6cR-gH-LsA"/>
+                <outlet property="AttentionActionView" destination="yHC-dZ-1M3" id="4cJ-qN-7vW"/>
+                <outlet property="addBtn" destination="cGB-tn-29m" id="G4u-3v-3zh"/>
+                <outlet property="cancelBtn" destination="piC-Fp-2CI" id="JJK-up-ntM"/>
+                <outlet property="choicenessActionView" destination="haQ-8M-dyg" id="00d-0A-KcQ"/>
+                <outlet property="deleteBtn" destination="86a-Qp-WLO" id="n3J-Sk-9yX"/>
+                <outlet property="goodsNameLB" destination="6QE-8x-r7Z" id="D3w-Ze-aI8"/>
+                <outlet property="goodsPriceLB" destination="S5z-Ul-Fnw" id="4M2-B3-ysl"/>
+                <outlet property="shareBtn" destination="cXb-ft-Khv" id="8b3-ut-mXS"/>
+                <outlet property="sortActionBtn" destination="if9-WM-YQ0" id="5we-EC-fYZ"/>
+                <outlet property="sortActionView" destination="GX3-7Q-aFu" id="b48-pC-dnp"/>
+                <outlet property="storeImgView" destination="6ef-pN-mnT" id="ov5-uR-Des"/>
+            </connections>
+            <point key="canvasLocation" x="33" y="99.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Dior" width="40" height="40"/>
+        <image name="store_add" width="40" height="40"/>
+        <image name="store_cancel" width="40" height="40"/>
+        <image name="store_cellSort" width="40" height="40"/>
+        <image name="store_delete" width="40" height="40"/>
+        <image name="store_share" width="40" height="40"/>
+    </resources>
+</document>

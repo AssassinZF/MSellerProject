@@ -1,0 +1,16 @@
+//
+//  MStoreManageModel.h
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MBaseModel.h"
+
+@interface MStoreManageModel : MBaseModel
+
+@property (nonatomic, assign) BOOL isChoiceness;//是否为精选选项
+@property (nonatomic, assign) BOOL isSort;//是否点击排序按钮
+
+@end

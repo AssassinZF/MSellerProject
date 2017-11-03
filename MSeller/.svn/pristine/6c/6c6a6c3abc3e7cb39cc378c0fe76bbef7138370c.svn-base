@@ -1,0 +1,146 @@
+//
+//  MStoreManageController.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreManageController.h"
+
+#import "MStoreManageModel.h"
+
+
+@interface MStoreManageController ()
+{
+    MStoreManageModel *_manageModel;
+    NSInteger actionType;//操作类型（1：加关注，2：推荐，3：取消关注，4：取消推荐）
+    NSInteger spuId;//商品spu编码
+}
+
+@end
+
+@implementation MStoreManageController
+
+
+- (void)initController
+{
+    _manageModel = [[MStoreManageModel alloc] init];
+    [self registerModel:_manageModel];
+}
+
+
+- (void)sendMessageID:(int)msgID messageInfo:(id)msgInfo
+{
+    if (msgID == mRequestChoicenessListTag)
+    {
+        [self sendRequestGetChoicenessListWithMsgID:msgID msgInfo:msgInfo];
+    }
+    else if (msgID == mRequestAttentionListTag)
+    {
+        [self sendRequestGetAttentionListWithMsgID:msgID msgInfo:msgInfo];
+    }
+    else if (msgID == mRequestEditGoodsStatusTag)
+    {
+        actionType = [msgInfo[@"actionType"] integerValue];
+        spuId = [msgInfo[@"spuId"] integerValue];
+        [self sendRequestEditGoodsStatusWithMsgID:msgID msgInfo:msgInfo];
+    }
+}
+
+
+#pragma mark 发送卖家获取店铺在售商品列表请求 获取类型（1：关注，2：在售）
+- (void)sendRequestGetChoicenessListWithMsgID:(int)msgID msgInfo:(id)msgInfo
+{
+    WS(ws)
+    MAPIRequest *request = [[MAPIRequest alloc] init];
+    request.type = MApiRequestPost;
+    request.requestURL = [NSString stringWithFormat:@"%@%@", M_SeverHost, M_Shop_GetGoods_URL];
+    request.action = @"goods";
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:[NSNumber numberWithInteger:2] forKey:@"type"];
+    request.parameters = dic;
+    
+    [MNetworkManger sendRequestWith:request progressBlock:nil success:^(id object) {
+        if (object && [[object objectForKey:mResponseCode] intValue] == 1)
+        {
+            [_manageModel handleSucessData:[object objectForKey:mResponseData] messageID:msgID];
+            [ws.delegate update:_manageModel msgID:msgID faildCode:eDataCodeSuccess];
+        }else{
+            if (object)
+            {
+                [ws.delegate update:object msgID:msgID faildCode:eDataCodeServiceFaild];
+            }else{
+                [ws.delegate update:nil msgID:msgID faildCode:eDataCodeJsonError];
+            }
+        }
+    } failure:^(NSError *error) {
+        [ws.delegate update:error msgID:msgID faildCode:eDataCodeFaild];
+    }];
+}
+
+
+#pragma mark 发送卖家获取店铺关注商品列表请求 获取类型（1：关注，2：在售）
+- (void)sendRequestGetAttentionListWithMsgID:(int)msgID msgInfo:(id)msgInfo
+{
+    WS(ws)
+    MAPIRequest *request = [[MAPIRequest alloc] init];
+    request.type = MApiRequestPost;
+    request.requestURL = [NSString stringWithFormat:@"%@%@", M_SeverHost, M_Shop_GetGoods_URL];
+    request.action = @"goods";
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:[NSNumber numberWithInteger:1] forKey:@"type"];
+    request.parameters = dic;
+    
+    [MNetworkManger sendRequestWith:request progressBlock:nil success:^(id object) {
+        if (object && [[object objectForKey:mResponseCode] intValue] == 1)
+        {
+            [_manageModel handleSucessData:[object objectForKey:mResponseData] messageID:msgID];
+            [ws.delegate update:_manageModel msgID:msgID faildCode:eDataCodeSuccess];
+        }else{
+            if (object)
+            {
+                [ws.delegate update:object msgID:msgID faildCode:eDataCodeServiceFaild];
+            }else{
+                [ws.delegate update:nil msgID:msgID faildCode:eDataCodeJsonError];
+            }
+        }
+    } failure:^(NSError *error) {
+        [ws.delegate update:error msgID:msgID faildCode:eDataCodeFaild];
+    }];
+}
+
+
+#pragma mark 发送修改店铺商品状态请求
+- (void)sendRequestEditGoodsStatusWithMsgID:(int)msgID msgInfo:(id)msgInfo
+{
+    WS(ws)
+    MAPIRequest *request = [[MAPIRequest alloc] init];
+    request.type = MApiRequestPost;
+    request.requestURL = [NSString stringWithFormat:@"%@%@", M_SeverHost, M_Shop_EditGoods_URL];
+    request.action = @"editGoods";
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:[NSNumber numberWithInteger:actionType] forKey:@"actionType"];
+    [dic setObject:[NSNumber numberWithInteger:spuId] forKey:@"spuId"];
+    request.parameters = dic;
+    
+    [MNetworkManger sendRequestWith:request progressBlock:nil success:^(id object) {
+        if (object && [[object objectForKey:mResponseCode] intValue] == 1)
+        {
+            [ws.delegate update:object msgID:msgID faildCode:eDataCodeSuccess];
+        }else{
+            if (object)
+            {
+                [ws.delegate update:object msgID:msgID faildCode:eDataCodeServiceFaild];
+            }else{
+                [ws.delegate update:nil msgID:msgID faildCode:eDataCodeJsonError];
+            }
+        }
+    } failure:^(NSError *error) {
+        [ws.delegate update:error msgID:msgID faildCode:eDataCodeFaild];
+    }];
+}
+
+
+
+@end

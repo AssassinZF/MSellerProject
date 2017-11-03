@@ -1,0 +1,71 @@
+//
+//  MStoreManageController.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreManageController.h"
+
+#import "MStoreManageModel.h"
+
+
+@interface MStoreManageController ()
+{
+    MStoreManageModel *_manageModel;
+    NSInteger type;
+}
+
+@end
+
+@implementation MStoreManageController
+
+
+- (void)initController
+{
+    _manageModel = [[MStoreManageModel alloc] init];
+    [self registerModel:_manageModel];
+}
+
+
+- (void)sendMessageID:(int)msgID messageInfo:(id)msgInfo
+{
+    type = [msgInfo[@"type"] integerValue];
+    [self sendRequestGetGoodsInfoWithMsgID:msgID msgInfo:msgInfo];
+}
+
+
+#pragma mark 发送卖家获取店铺在售商品列表请求
+- (void)sendRequestGetGoodsInfoWithMsgID:(int)msgID msgInfo:(id)msgInfo
+{
+    WS(ws)
+    MAPIRequest *request = [[MAPIRequest alloc] init];
+    request.type = MApiRequestGet;
+    request.requestURL = [NSString stringWithFormat:@"%@%@", M_SeverHost, M_Shop_GetGoods_URL];
+    request.action = @"goods";
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [dic setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
+    request.parameters = dic;
+    
+    [MNetworkManger sendRequestWith:request progressBlock:nil success:^(id object) {
+        if (object && [[object objectForKey:mResponseCode] intValue] == 1)
+        {
+            [_manageModel handleSucessData:[object objectForKey:mResponseData] messageID:msgID];
+            [ws.delegate update:_manageModel msgID:msgID faildCode:eDataCodeSuccess];
+        }else{
+            if (object)
+            {
+                [ws.delegate update:object msgID:msgID faildCode:eDataCodeServiceFaild];
+            }else{
+                [ws.delegate update:nil msgID:msgID faildCode:eDataCodeJsonError];
+            }
+        }
+    } failure:^(NSError *error) {
+        [ws.delegate update:error msgID:msgID faildCode:eDataCodeFaild];
+    }];
+}
+
+
+
+@end

@@ -1,0 +1,45 @@
+//
+//  MStoreImageController.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/11/2.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreImageController.h"
+
+
+#import "MStoreImageModel.h"
+
+
+@interface MStoreImageController ()
+{
+    MStoreImageModel *_imageModel;
+}
+
+@end
+
+@implementation MStoreImageController
+
+
+- (void)initController
+{
+    _imageModel = [[MStoreImageModel alloc] init];
+    [self registerModel:_imageModel];
+}
+
+
+- (void)sendMessageID:(int)msgID messageInfo:(id)msgInfo
+{
+    if (msgID == mRequestGetSignPicsTag)
+        [self sendRquestGetSignPicsWithMsgID:msgID msgInfo:msgInfo];
+}
+
+
+- (void)sendRquestGetSignPicsWithMsgID:(int)msgID msgInfo:(id)msgInfo
+{
+    
+}
+
+
+@end

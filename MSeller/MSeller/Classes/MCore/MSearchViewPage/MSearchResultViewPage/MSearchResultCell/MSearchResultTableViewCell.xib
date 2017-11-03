@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="MSearchResultTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="MSearchResultTableViewCell" id="KGk-i7-Jjw" customClass="MSearchResultTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7gK-wq-gEw">
+                        <rect key="frame" x="10" y="10" width="120" height="120"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="7gK-wq-gEw" secondAttribute="height" multiplier="1:1" id="1Ti-sU-XuF"/>
+                            <constraint firstAttribute="height" constant="120" id="bgh-pp-69G"/>
+                            <constraint firstAttribute="width" constant="120" id="oc2-3x-Ags"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[减价200元] 2018款(BMW)7系为新时代创变领袖带来更鲜明" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Tm-L5-cPq">
+                        <rect key="frame" x="145" y="10" width="160" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="J0d-JY-GyO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥888.00 / 约赚￥8.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-xU-CyJ">
+                        <rect key="frame" x="145" y="61" width="160" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="8PQ-km-8XJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Uw-bC-1Zm">
+                        <rect key="frame" x="201" y="108" width="24" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="6Uw-bC-1Zm" secondAttribute="height" multiplier="12:11" id="yw6-rU-74I"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="search_like"/>
+                        <connections>
+                            <action selector="clickHeartEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Rx9-2S-fud"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7c-K3-3Gp">
+                        <rect key="frame" x="241" y="108" width="24" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="c7c-K3-3Gp" secondAttribute="height" multiplier="12:11" id="MYE-my-W9D"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="search_add"/>
+                        <connections>
+                            <action selector="clickAddEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Nle-xd-eXT"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05n-4I-Zy6">
+                        <rect key="frame" x="281" y="108" width="24" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="HiN-vV-ZOF"/>
+                            <constraint firstAttribute="width" constant="24" id="Kkq-gP-Wyx"/>
+                            <constraint firstAttribute="width" secondItem="05n-4I-Zy6" secondAttribute="height" multiplier="12:11" id="ZW8-Xy-Yzx"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="search_share"/>
+                        <connections>
+                            <action selector="clickShareEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fNf-eG-efZ"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WvN-ku-bfn">
+                        <rect key="frame" x="145" y="139" width="175" height="1"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Av1-zC-E5r"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="yrh-xU-CyJ" secondAttribute="trailing" constant="15" id="0gg-KR-ztG"/>
+                    <constraint firstAttribute="bottom" secondItem="WvN-ku-bfn" secondAttribute="bottom" id="1aq-Ej-hus"/>
+                    <constraint firstItem="0Tm-L5-cPq" firstAttribute="leading" secondItem="7gK-wq-gEw" secondAttribute="trailing" constant="15" id="1zP-Iv-zYf"/>
+                    <constraint firstItem="0Tm-L5-cPq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="23Y-au-dAW"/>
+                    <constraint firstItem="7gK-wq-gEw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="4vc-qZ-c08"/>
+                    <constraint firstAttribute="trailing" secondItem="WvN-ku-bfn" secondAttribute="trailing" id="H6A-aO-zvl"/>
+                    <constraint firstAttribute="trailing" secondItem="0Tm-L5-cPq" secondAttribute="trailing" constant="15" id="K7i-Vy-XJF"/>
+                    <constraint firstItem="c7c-K3-3Gp" firstAttribute="height" secondItem="6Uw-bC-1Zm" secondAttribute="height" id="Lzh-Ee-xFA"/>
+                    <constraint firstAttribute="bottom" secondItem="c7c-K3-3Gp" secondAttribute="bottom" constant="10" id="OTs-hM-BhN"/>
+                    <constraint firstItem="05n-4I-Zy6" firstAttribute="leading" secondItem="c7c-K3-3Gp" secondAttribute="trailing" constant="16" id="V38-J4-wsy"/>
+                    <constraint firstItem="7gK-wq-gEw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="WLY-VW-AvQ"/>
+                    <constraint firstItem="c7c-K3-3Gp" firstAttribute="leading" secondItem="6Uw-bC-1Zm" secondAttribute="trailing" constant="16" id="aaq-bb-eOo"/>
+                    <constraint firstItem="WvN-ku-bfn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="145" id="fgP-nA-bu0"/>
+                    <constraint firstItem="yrh-xU-CyJ" firstAttribute="leading" secondItem="7gK-wq-gEw" secondAttribute="trailing" constant="15" id="kIZ-3j-HcE"/>
+                    <constraint firstItem="yrh-xU-CyJ" firstAttribute="top" secondItem="0Tm-L5-cPq" secondAttribute="bottom" constant="15" id="lMv-5b-Jzb"/>
+                    <constraint firstAttribute="trailing" secondItem="05n-4I-Zy6" secondAttribute="trailing" constant="15" id="mnv-Xm-jyz"/>
+                    <constraint firstAttribute="bottom" secondItem="05n-4I-Zy6" secondAttribute="bottom" constant="10" id="sDY-xL-Owz"/>
+                    <constraint firstItem="05n-4I-Zy6" firstAttribute="height" secondItem="6Uw-bC-1Zm" secondAttribute="height" id="szg-Ww-Pzn"/>
+                    <constraint firstAttribute="bottom" secondItem="6Uw-bC-1Zm" secondAttribute="bottom" constant="10" id="yaP-Sr-ILB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addBtn" destination="c7c-K3-3Gp" id="FEK-oE-fPf"/>
+                <outlet property="goodsImgView" destination="7gK-wq-gEw" id="ipD-m8-ear"/>
+                <outlet property="goodsNameLB" destination="0Tm-L5-cPq" id="GSX-qY-6fO"/>
+                <outlet property="goodsPriceLB" destination="yrh-xU-CyJ" id="Wlj-PI-TRf"/>
+                <outlet property="likeBtn" destination="6Uw-bC-1Zm" id="RgP-Xq-MVD"/>
+                <outlet property="shareBtn" destination="05n-4I-Zy6" id="FiU-Xq-KRa"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="53.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="search_add" width="50" height="50"/>
+        <image name="search_like" width="51" height="44"/>
+        <image name="search_share" width="50" height="50"/>
+    </resources>
+</document>

@@ -1,0 +1,23 @@
+//
+//  MGoodsDetailShareInfoView.h
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/25.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol MGoodsDetailShareInfoViewDelegate <NSObject>
+
+
+
+@end
+
+@interface MGoodsDetailShareInfoView : UIView
+
+@property (nonatomic, weak) id <MGoodsDetailShareInfoViewDelegate> delegate;
+
++ (MGoodsDetailShareInfoView *)getShareInfoViewWith:(CGRect)frame delegate:(id)delegate;
+
+@end

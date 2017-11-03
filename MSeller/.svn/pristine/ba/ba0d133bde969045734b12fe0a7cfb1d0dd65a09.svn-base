@@ -1,0 +1,40 @@
+//
+//  MStoreImageModel.m
+//  MSeller
+//
+//  Created by 1yyg on 2017/11/2.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MStoreImageModel.h"
+
+
+#import "MStoreImagesData.h"
+
+@implementation MStoreImageModel
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.storeImgsArray = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return self;
+}
+
+
+-(void)handleSucessData:(id)dataSource messageID:(int)msgID
+{
+    if (msgID == mRequestGetSignPicsTag) {
+        //店招图图片路径解析
+        [self.storeImgsArray addObjectsFromArray:dataSource];
+    }
+}
+
+- (void)deleteManageListData
+{
+    [self.storeImgsArray removeAllObjects];
+}
+
+@end

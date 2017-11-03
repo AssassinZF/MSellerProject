@@ -1,0 +1,32 @@
+//
+//  MGoodsDetailController.m
+//  MSeller
+//
+//  Created by TreeWrite on 2017/10/20.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MGoodsDetailController.h"
+#import "MGoodsDetailModel.h"
+
+@interface MGoodsDetailController ()
+{
+    MGoodsDetailModel *_model;
+}
+
+@end
+
+@implementation MGoodsDetailController
+
+-(void)initController
+{
+    _model = [[MGoodsDetailModel alloc] init];
+    [self registerModel:_model];
+}
+
+- (void)sendMessageID:(int)msgID messageInfo:(id)msgInfo
+{
+    
+}
+
+@end

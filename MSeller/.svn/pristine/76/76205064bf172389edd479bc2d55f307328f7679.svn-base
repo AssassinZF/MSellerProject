@@ -1,0 +1,25 @@
+//
+//  MStoreInfoData.h
+//  MSeller
+//
+//  Created by 1yyg on 2017/10/27.
+//  Copyright © 2017年 TreeWrite. All rights reserved.
+//
+
+#import "MBaseObjectData.h"
+
+@interface MStoreInfoData : MBaseObjectData
+
+
+@property (nonatomic, assign) int storeid;//店铺ID
+@property (nonatomic, copy) NSString *storename;//店铺名
+@property (nonatomic, copy) NSString *logopic;//店铺logo图片 ,
+@property (nonatomic, copy) NSString *signpic;//店招图 ,
+@property (nonatomic, copy) NSString *descriptionStr;//店铺描述
+@property (nonatomic, assign) int styleid;//店铺风格
+@property (nonatomic, assign) int todayorder;//今日订单量 ,
+@property (nonatomic, assign) int totalbrowse;//累计访问量 ,
+@property (nonatomic, assign) CGFloat sailsmonth;//本月销售额 ,
+@property (nonatomic, assign) int totalgoods;//在售商品数 ,
+
+@end
